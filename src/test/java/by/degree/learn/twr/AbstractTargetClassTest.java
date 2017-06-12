@@ -1,7 +1,7 @@
 package by.degree.learn.twr;
 
 import org.easymock.Mock;
-import org.junit.Before;
+import org.easymock.MockType;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,14 +10,11 @@ import java.io.Writer;
 import static org.easymock.EasyMock.*;
 
 abstract public class AbstractTargetClassTest {
-    @Mock
-    protected Writer writer;
-    protected AbstractTargetClass target;
 
-    @Before
-    public void setUp() throws Exception {
-        writer = createStrictMock(Writer.class);
-    }
+    @Mock(type = MockType.STRICT)
+    Writer writer;
+
+    AbstractTargetClass target;
 
     @Test
     public void doSmth() throws Exception {
