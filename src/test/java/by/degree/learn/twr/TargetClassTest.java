@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.io.Writer;
 
 import static org.easymock.EasyMock.*;
@@ -13,9 +14,9 @@ import static org.easymock.EasyMock.*;
 @RunWith(EasyMockRunner.class)
 public class TargetClassTest {
 
-
     @Mock
     private Writer writer;
+
     private TargetClass targetClass;
 
     @Before
@@ -28,6 +29,21 @@ public class TargetClassTest {
     public void doSmth() throws Exception {
         writer.write("Hello, World");
         expectLastCall().once();
+
+        writer.close();
+        expectLastCall().once();
+
+        replay(writer);
+
+        targetClass.doSmth();
+
+        verify(writer);
+    }
+
+    @Test
+    public void doSmthAndHitIOExceptio() throws Exception {
+        writer.write("Hello, World");
+        expectLastCall().andThrow(new IOException());
 
         writer.close();
         expectLastCall().once();
