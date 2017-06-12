@@ -11,8 +11,28 @@ class TargetClassExploded {
     }
 
     void doSmth() {
-        try (Writer w = writer) {
-            w.write("Hello, World");
+        // according to http://docs.oracle.com/javase/specs/jls/se8/jls8.pdf
+        try {
+            final Writer w = writer;
+            Throwable primaryException = null;
+            try {
+                w.write("Hello, World");
+            } catch (Throwable t) {
+                primaryException = t;
+                throw t;
+            } finally {
+                if (w != null) {
+                    if (primaryException != null) {
+                        try {
+                            w.close();
+                        } catch (Throwable suppressedException) {
+                            primaryException.addSuppressed(suppressedException);
+                        }
+                    } else {
+                        w.close();
+                    }
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
