@@ -3,11 +3,9 @@ package by.degree.learn.twr;
 import java.io.IOException;
 import java.io.Writer;
 
-class TargetClassExploded {
-    private final Writer writer;
-
+class TargetClassExploded extends AbstractTargetClass {
     TargetClassExploded(Writer writer) {
-        this.writer = writer;
+        super(writer);
     }
 
     void doSmth() {

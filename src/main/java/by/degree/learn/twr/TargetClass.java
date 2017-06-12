@@ -3,13 +3,12 @@ package by.degree.learn.twr;
 import java.io.IOException;
 import java.io.Writer;
 
-class TargetClass {
-    private final Writer writer;
-
+class TargetClass extends AbstractTargetClass {
     TargetClass(Writer writer) {
-        this.writer = writer;
+        super(writer);
     }
 
+    @Override
     void doSmth() {
         try (Writer w = writer) {
             w.write("Hello, World");
