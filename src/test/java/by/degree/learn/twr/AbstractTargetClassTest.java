@@ -64,10 +64,10 @@ abstract public class AbstractTargetClassTest {
         writer.close();
         expectLastCall().andThrow(new IOException());
 
-        replay(writer);
+        replay(writer, e1);
 
         target.doSmth();
 
-        verify(writer);
+        verify(writer, e1);
     }
 }
