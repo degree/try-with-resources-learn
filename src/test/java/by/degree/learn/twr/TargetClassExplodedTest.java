@@ -41,12 +41,31 @@ public class TargetClassExplodedTest {
     }
 
     @Test
-    public void doSmthAndHitIOExceptio() throws Exception {
+    public void doSmthAndHitIOException() throws Exception {
+        final IOException e1 = createStrictMock(IOException.class);
+        e1.printStackTrace();
+        expectLastCall().once();
+
+        writer.write("Hello, World");
+        expectLastCall().andThrow(e1);
+
+        writer.close();
+        expectLastCall().once();
+
+        replay(writer, e1);
+
+        targetClassExploded.doSmth();
+
+        verify(writer, e1);
+    }
+
+    @Test
+    public void doSmthAndHitIOExceptionAndSuppressed() throws Exception {
         writer.write("Hello, World");
         expectLastCall().andThrow(new IOException());
 
         writer.close();
-        expectLastCall().once();
+        expectLastCall().andThrow(new IOException());
 
         replay(writer);
 
