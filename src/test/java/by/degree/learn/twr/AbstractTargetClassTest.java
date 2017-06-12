@@ -2,6 +2,7 @@ package by.degree.learn.twr;
 
 import org.easymock.Mock;
 import org.easymock.MockType;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -63,10 +64,10 @@ abstract public class AbstractTargetClassTest {
         writer.close();
         expectLastCall().andThrow(new IOException());
 
-        replay(writer, e1);
+        replay(writer);
 
         target.doSmth();
 
-        verify(writer, e1);
+        verify(writer);
     }
 }
